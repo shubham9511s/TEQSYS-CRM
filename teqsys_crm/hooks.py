@@ -8,6 +8,20 @@ app_license = "MIT"
 # Includes in <head>
 # ------------------
 
+fixtures = [
+    {"doctype": "Custom Field"},
+    {"doctype": "Client Script"},
+    {"doctype": "Server Script"},
+    {"doctype": "Property Setter"},
+    {"doctype": "Report"},
+    {"doctype": "Workflow"},
+    {"doctype": "Print Format"},
+    {"doctype": "Notification"},
+    {"doctype": "Role"},
+    {"doctype": "Workspace"},
+    {"doctype": "Web Page"},
+
+]
 # include js, css files in header of desk.html
 # app_include_css = "/assets/teqsys_crm/css/teqsys_crm.css"
 # app_include_js = "/assets/teqsys_crm/js/teqsys_crm.js"

@@ -1,0 +1,18 @@
+[
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Insert",
+  "event_frequency": "All",
+  "modified": "2024-10-27 20:37:01.158293",
+  "module": null,
+  "name": "Validate",
+  "reference_doctype": "Timesheet Detail",
+  "script": "# Query to check if the session user has any ongoing (not completed) activities in different Timesheets\r\nongoing_activities = frappe.db.get_list(\r\n    'Timesheet Detail',\r\n    filters={\r\n        'parenttype': 'Timesheet',\r\n        'user': frappe.session.user,  # Use the logged-in session user\r\n        'completed': 0,  # Only check for incomplete (ongoing) activities\r\n        'parent': ['!=', doc.parent]  # Exclude the current Timesheet (doc.parent)\r\n    },\r\n    fields=['name', 'parent']  # 'parent' refers to the Timesheet ID\r\n)\r\n\r\n# If ongoing activities exist in other Timesheets, raise an error\r\nif ongoing_activities:\r\n    timesheet_ids = [activity['parent'] for activity in ongoing_activities]\r\n    timesheet_list = ', '.join(timesheet_ids)\r\n    frappe.throw(f\"You cannot create a new activity while there are ongoing activities in other Timesheet(s): {timesheet_list}. Please complete the ongoing activity in those Timesheets first.\")\r\n",
+  "script_type": "DocType Event"
+ }
+]
